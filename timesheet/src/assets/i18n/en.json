@@ -1,0 +1,33 @@
+{
+    "ENUMS" : {
+        "STATE" : {
+            "ACTIVE" : "Active",
+            "SUBMITTED" : "Submitted"
+        },
+        "TYPE" : {
+            "TELEPHONE_CALL" : "Telephone Call",
+            "DRAFTING_DOCUMENT" : "Drafting Document",
+            "RESEARCH" : "Research"
+        }
+    },
+    "TIMESHEET" : {
+        "LABELS" : {
+            "STATE" : "State",
+            "TITLE" : "Title",
+            "TYPE" : "Type",
+            "DURATION" : "Duration",
+            "HOURLY_RATE" : "Hourly rate",
+            "TOTAL" : "Total",
+            "DEFAULT_HOURLY_RATE" : "Default hourly rate",
+            "EMPTY_LIST" : "Add a new line using to start your timesheet"
+        },
+        "BUTTONS" : {
+            "NEW" : "Add line",
+            "SUBMIT" : "Submit",
+            "SAVE" : "Save",
+            "CANCEL" : "Cancel",
+            "EDIT" : "Edit",
+            "DELETE" : "Delete"
+        }
+    }
+}

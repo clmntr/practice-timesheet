@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <button class="btn btn-outline-primary" (click)="addLine()">{{ 'TIMESHEET.BUTTONS.NEW' | translate }}</button>
+            <button class="btn btn-outline-primary" (click)="submit()">{{ 'TIMESHEET.BUTTONS.SUBMIT' | translate }}</button>
+        </div>
+        <div class="col-12 col-md-8">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">{{ 'TIMESHEET.LABELS.DEFAULT_HOURLY_RATE' | translate }} :</label>
+                <div class="col-sm-8 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input type="number" class="form-control" aria-label="Hourly Rate" [(ngModel)]="timesheet.defaultRate">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">{{ 'TIMESHEET.LABELS.STATE' | translate }}</th>
+                    <th scope="col">{{ 'TIMESHEET.LABELS.TITLE' | translate }}</th>
+                    <th scope="col">{{ 'TIMESHEET.LABELS.TYPE' | translate }}</th>
+                    <th scope="col">{{ 'TIMESHEET.LABELS.DURATION' | translate }}</th>
+                    <th scope="col">{{ 'TIMESHEET.LABELS.HOURLY_RATE' | translate }}</th>
+                    <th scope="col">{{ 'TIMESHEET.LABELS.TOTAL' | translate }}</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let line of timesheet.lines">
+                    <ng-container *ngIf="line.edition">
+                        <td></td>
+                        <td>
+                            <input type="text" class="form-control" [(ngModel)]="line.edition.title">
+                        </td>
+                        <td>
+                            <select class="form-control" [(ngModel)]="line.edition.type">
+                                <option *ngFor="let type of types | enumToArray" value="type">{{ type | translate }}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="time" class="form-control" [(ngModel)]="line.edition.duration" (ngModelChange)="calculateTotal( line.edition )">
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" [(ngModel)]="line.edition.rate" (ngModelChange)="calculateTotal( line.edition )">
+                        </td>
+                        <td >{{ line.edition.total | currency }}</td>
+                        <td>
+                            <button class="btn btn-outline-success disabled" (click)="saveLine( line )">
+                                {{ 'TIMESHEET.BUTTONS.SAVE' | translate }}
+                            </button>
+                            <button class="btn btn-outline-warning" (click)="cancelLine( line )">
+                                {{ 'TIMESHEET.BUTTONS.CANCEL' | translate }}
+                            </button>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngIf="!line.edition">
+                        <td>{{ line.state | translate }}</td>
+                        <td>{{ line.title }}</td>
+                        <td>{{ line.type | translate }}</td>
+                        <td>{{ line.duration }}</td>
+                        <td>{{ line.rate | currency }}</td>
+                        <td>{{ line.total | currency }}</td>
+                        <td *ngIf="line.state === states.Active">
+                            <button class="btn btn-outline-success" (click)="editLine( line )">
+                                {{ 'TIMESHEET.BUTTONS.EDIT' | translate }}
+                            </button>
+                            <button class="btn btn-outline-danger" (click)="deleteLine( line )">
+                                {{ 'TIMESHEET.BUTTONS.DELETE' | translate }}
+                            </button>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr *ngIf="timesheet.lines.length === 0">
+                    <td colspan="8" class="text-center">{{ 'TIMESHEET.LABELS.EMPTY_LIST' | translate }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
