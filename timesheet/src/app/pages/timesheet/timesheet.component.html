@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col">
             <button class="btn btn-outline-primary" (click)="addLine()">{{ 'TIMESHEET.BUTTONS.NEW' | translate }}</button>
             <button class="btn btn-outline-primary" (click)="submit()">{{ 'TIMESHEET.BUTTONS.SUBMIT' | translate }}</button>
         </div>
-        <div class="col-12 col-md-8">
+        <div class="col">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">{{ 'TIMESHEET.LABELS.DEFAULT_HOURLY_RATE' | translate }} :</label>
-                <div class="col-sm-8 input-group">
+                <div class="col-sm-4 input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
@@ -20,25 +20,27 @@
         <table class="table">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">{{ 'TIMESHEET.LABELS.STATE' | translate }}</th>
-                    <th scope="col">{{ 'TIMESHEET.LABELS.TITLE' | translate }}</th>
-                    <th scope="col">{{ 'TIMESHEET.LABELS.TYPE' | translate }}</th>
-                    <th scope="col">{{ 'TIMESHEET.LABELS.DURATION' | translate }}</th>
-                    <th scope="col">{{ 'TIMESHEET.LABELS.HOURLY_RATE' | translate }}</th>
-                    <th scope="col">{{ 'TIMESHEET.LABELS.TOTAL' | translate }}</th>
-                    <th scope="col"></th>
+                    <th scope="col" width="5%"></th>
+                    <th scope="col" width="10%">{{ 'TIMESHEET.LABELS.STATE' | translate }}</th>
+                    <th scope="col" width="22.5%">{{ 'TIMESHEET.LABELS.TITLE' | translate }}</th>
+                    <th scope="col" width="17.5%">{{ 'TIMESHEET.LABELS.TYPE' | translate }}</th>
+                    <th scope="col" width="10%">{{ 'TIMESHEET.LABELS.DURATION' | translate }}</th>
+                    <th scope="col" width="10%">{{ 'TIMESHEET.LABELS.HOURLY_RATE' | translate }}</th>
+                    <th scope="col" width="10%">{{ 'TIMESHEET.LABELS.TOTAL' | translate }}</th>
+                    <th scope="col" width="15%"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let line of timesheet.lines">
                     <ng-container *ngIf="line.edition">
                         <td></td>
+                        <td></td>
                         <td>
                             <input type="text" class="form-control" [(ngModel)]="line.edition.title">
                         </td>
                         <td>
                             <select class="form-control" [(ngModel)]="line.edition.type">
-                                <option *ngFor="let type of types | enumToArray" value="type">{{ type | translate }}</option>
+                                <option *ngFor="let type of types | enumToArray" value="{{ type }}">{{ type | translate }}</option>
                             </select>
                         </td>
                         <td>
@@ -47,9 +49,9 @@
                         <td>
                             <input type="number" class="form-control" [(ngModel)]="line.edition.rate" (ngModelChange)="calculateTotal( line.edition )">
                         </td>
-                        <td >{{ line.edition.total | currency }}</td>
+                        <td class="align-middle">{{ line.edition.total | currency }}</td>
                         <td>
-                            <button class="btn btn-outline-success disabled" (click)="saveLine( line )">
+                            <button class="btn btn-outline-success" (click)="saveLine( line )">
                                 {{ 'TIMESHEET.BUTTONS.SAVE' | translate }}
                             </button>
                             <button class="btn btn-outline-warning" (click)="cancelLine( line )">
@@ -58,12 +60,15 @@
                         </td>
                     </ng-container>
                     <ng-container *ngIf="!line.edition">
-                        <td>{{ line.state | translate }}</td>
-                        <td>{{ line.title }}</td>
-                        <td>{{ line.type | translate }}</td>
-                        <td>{{ line.duration }}</td>
-                        <td>{{ line.rate | currency }}</td>
-                        <td>{{ line.total | currency }}</td>
+                        <td class="align-middle">
+                            <input type="checkbox">
+                        </td>
+                        <td class="align-middle">{{ line.state | translate }}</td>
+                        <td class="align-middle">{{ line.title }}</td>
+                        <td class="align-middle">{{ line.type | translate }}</td>
+                        <td class="align-middle">{{ line.duration }}</td>
+                        <td class="align-middle">{{ line.rate | currency }}</td>
+                        <td class="align-middle">{{ line.total | currency }}</td>
                         <td *ngIf="line.state === states.Active">
                             <button class="btn btn-outline-success" (click)="editLine( line )">
                                 {{ 'TIMESHEET.BUTTONS.EDIT' | translate }}
