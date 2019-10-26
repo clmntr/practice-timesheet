@@ -62,11 +62,19 @@ export class TimesheetComponent implements OnInit {
     }
 
     /**
+     * Helper method to tell if the user can save or not the edition line
+     * @param line 
+     */
+    cannotSave ( line : TimesheetLine ) {
+        return !line.title || !line.type || !line.duration;
+    }
+
+    /**
      * Save the edition version of the line
      * @param line 
      */
     saveLine ( line: TimesheetLine ) {
-        line.state = this.states.Active;
+        line.state = State.Active;
         if ( line.edition ) {
             line.applyLine( line.edition );
             line.edition = null;
@@ -84,11 +92,25 @@ export class TimesheetComponent implements OnInit {
         }
     }
 
+    toggleSelect ( $event : any, line: TimesheetLine ) {
+        if ( $event.currentTarget.checked ) {
+            this.selected.push( line );
+        }
+        else {
+            const index = this.selected.indexOf( line );
+            this.selected.splice( index, 1 );
+        }
+    }
+
     /**
      * Submit the selected lines
      */
     submit() {
-
+        let len = this.selected.length;
+        while ( len-- ) {
+            this.selected[ len ].state = State.Submitted;
+        }
+        this.selected = [];
     }
 
     /**
