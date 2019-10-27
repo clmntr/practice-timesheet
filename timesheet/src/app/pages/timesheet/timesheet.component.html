@@ -76,7 +76,7 @@
                             </button>
                         </td>
                     </ng-container>
-                    <ng-container *ngIf="!line.edition">
+                    <ng-container *ngIf="!line.edition" (click)="toggle(line)">
                         <td class="align-middle">
                             <input *ngIf="line.state !== states.Submitted" type="checkbox" (change)="toggleSelect($event, line)" role="button">
                         </td>

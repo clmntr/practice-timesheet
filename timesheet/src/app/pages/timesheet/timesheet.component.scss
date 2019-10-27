@@ -1,6 +1,10 @@
 .container-fluid {
     max-width: 1280px;
 
+    input[role=button] {
+        cursor: pointer;
+    }
+
     button {
         margin: 0 5px;
     }
@@ -8,8 +12,8 @@
     table {
         margin-top: 2rem;
 
-        td {
-            min-height: 63px;
+        td, tr {
+            height: 63px;
         }
     }
 }

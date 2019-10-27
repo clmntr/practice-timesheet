@@ -74,11 +74,7 @@ export class TimesheetComponent implements OnInit {
      * @param line 
      */
     saveLine ( line: TimesheetLine ) {
-        line.state = State.Active;
-        if ( line.edition ) {
-            line.applyLine( line.edition );
-            line.edition = null;
-        }
+        this.timesheetService.saveline( line );
     }
 
     /**
@@ -86,12 +82,14 @@ export class TimesheetComponent implements OnInit {
      * @param index 
      */
     deleteLine ( line: TimesheetLine ) {
-        const index = this.timesheet.lines.indexOf( line );
-        if ( index >= 0 ) {
-            this.timesheet.lines.splice( index, 1 );
-        }
+        this.timesheetService.deleteLine( line );
     }
 
+    /**
+     * Method that toggle the line selection
+     * @param $event 
+     * @param line 
+     */
     toggleSelect ( $event : any, line: TimesheetLine ) {
         if ( $event.currentTarget.checked ) {
             this.selected.push( line );
@@ -106,10 +104,7 @@ export class TimesheetComponent implements OnInit {
      * Submit the selected lines
      */
     submit() {
-        let len = this.selected.length;
-        while ( len-- ) {
-            this.selected[ len ].state = State.Submitted;
-        }
+        this.timesheetService.submitLines( this.selected );
         this.selected = [];
     }
 
