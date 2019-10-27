@@ -28,6 +28,12 @@
             "CANCEL" : "Cancel",
             "EDIT" : "Edit",
             "DELETE" : "Delete"
+        },
+        "MODAL" : {
+            "TITLE" : "Delete this line",
+            "CONTENT" : "Are you sure you want to delete this timesheet entry?",
+            "CANCEL" : "Cancel",
+            "DELETE" : "Delete"
         }
     }
 }

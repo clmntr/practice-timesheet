@@ -1,3 +1,4 @@
+<!-- Timesheet container -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-6">
@@ -102,7 +103,7 @@
                             <button class="btn btn-success" (click)="editLine( line )">
                                 {{ 'TIMESHEET.BUTTONS.EDIT' | translate }}
                             </button>
-                            <button class="btn btn-danger" (click)="deleteLine( line )">
+                            <button class="btn btn-danger" (click)="displayDeleteModal( delModal, line )">
                                 {{ 'TIMESHEET.BUTTONS.DELETE' | translate }}
                             </button>
                         </td>
@@ -116,3 +117,26 @@
         </table>
     </div>
 </div>
+
+<!-- Modal  -->
+<ng-template #delModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+            {{ 'TIMESHEET.MODAL.TITLE' | translate }}
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{ 'TIMESHEET.MODAL.CONTENT' | translate }}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
+            {{ 'TIMESHEET.MODAL.CANCEL' | translate }}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="modal.close()">
+            {{ 'TIMESHEET.MODAL.DELETE' | translate }}
+        </button>
+    </div>
+</ng-template>

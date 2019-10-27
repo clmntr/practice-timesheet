@@ -7,11 +7,12 @@ import { FormsModule } from '@angular/forms';
 
 // Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-// Moment
+// Vendors
 import * as moment from 'moment';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // App
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +32,7 @@ import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
+    NgbModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

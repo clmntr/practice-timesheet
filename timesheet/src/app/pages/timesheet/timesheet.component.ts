@@ -4,6 +4,7 @@ import { Timesheet } from 'src/app/model/timesheet';
 import { TimesheetLine } from 'src/app/model/timesheet-line';
 import { State } from 'src/app/enums/state.enum'
 import { Type } from 'src/app/enums/type.enum'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-timesheet',
@@ -23,7 +24,7 @@ export class TimesheetComponent implements OnInit {
     // --------------------------------------------------
     // Constructor
 
-    constructor( private timesheetService : TimesheetService ) { }
+    constructor( private timesheetService : TimesheetService, private modalService: NgbModal ) { }
     
     // --------------------------------------------------
     // Methods
@@ -54,7 +55,7 @@ export class TimesheetComponent implements OnInit {
      */
     cancelLine ( line: TimesheetLine ) {
         if ( !line.state ) {
-            this.deleteLine( line );
+            this.timesheetService.deleteLine( line );
         }
         else {
             line.edition = null;
@@ -78,14 +79,6 @@ export class TimesheetComponent implements OnInit {
     }
 
     /**
-     * Remove the line selected from the timesheet
-     * @param index 
-     */
-    deleteLine ( line: TimesheetLine ) {
-        this.timesheetService.deleteLine( line );
-    }
-
-    /**
      * Method that toggle the line selection
      * @param $event 
      * @param line 
@@ -106,6 +99,19 @@ export class TimesheetComponent implements OnInit {
     submit() {
         this.timesheetService.submitLines( this.selected );
         this.selected = [];
+    }
+
+    /**
+     * Display a modal in order to validate the suppression of a line
+     * @param delModal 
+     * @param line 
+     */
+    displayDeleteModal( delModal: any, line: TimesheetLine ) {
+        this.modalService
+            .open( delModal, { ariaLabelledBy: 'modal-basic-title', centered: true } ).result
+            .then( () => {
+                this.timesheetService.deleteLine( line );
+            })
     }
 
     /**
